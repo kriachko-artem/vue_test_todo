@@ -91,7 +91,8 @@ ul{
 }
 li{
   position: relative;
-  display: block;
+  display: flex;
+  justify-content: space-between;
   padding: 20px;
   text-decoration: none;
   color: #212121;

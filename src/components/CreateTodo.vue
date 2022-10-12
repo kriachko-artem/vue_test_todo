@@ -13,16 +13,13 @@
                style=""
         >Что нужно сделать...</label>
       </div>
-      <button
-          class="add"
-          type="submit">+</button>
       <button 
           class="close"
           v-on:click="$emit('close-creator')">&times;
       </button>
     </div>
     <div class="bottom">
-      <label for="categories">Выберите категорию</label>
+      <label for="categories">Выберите категорию:</label>
       <select v-on:change="setCategory"
               id="categories">
         <option v-for="(cat,index) in categories"
@@ -126,7 +123,7 @@ form > div{
   height: 100%;
   left: 0;
   top: 0;
-  font-size: 13px;
+  font-size: 15px;
   transition: 0.5s;
 }
 .add{
@@ -148,5 +145,13 @@ form > div{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+select{
+  background: none;
+  border-radius: 5px;
+  text-align: center;
+}
+select:focus-visible{
+  outline: none;
 }
 </style>
