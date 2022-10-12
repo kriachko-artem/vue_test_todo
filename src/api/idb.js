@@ -135,6 +135,18 @@ export const idb = {
             }
         })
     },
+    delete: function (id) {
+        let request = this.request()
+        request.onsuccess = () => {
+            const db = request.result
+            let transaction = db.transaction(this.options.tables.list.name, 'readwrite')
+            let store = transaction.objectStore(this.options.tables.list.name)
+            store.delete(id)
+            transaction.oncomplete = () => {
+                db.close()
+            }
+        }
+    },
 };
 
 
