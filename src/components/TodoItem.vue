@@ -1,7 +1,7 @@
 <template>
 <li v-bind:class="{'done':todo.completed}" class="item">
-  <input type="checkbox"
-         v-on:change="$emit('setComplete',todo)"/>
+<!--  <input type="checkbox"-->
+<!--         v-on:change="$emit('setComplete',todo)"/>-->
   <span>
       <strong>{{index}}</strong>
     {{ todo.title }}
@@ -17,16 +17,6 @@ export default {
     return {
     }
 
-  },
-  mounted() {
-    // this.self = document.querySelectorAll('li')
-    // gsap.from(this.self,{
-    //   scale: 0,
-    //   duration: 2,
-    //   ease: "elastic.out(1, 0.8)",
-    // })
-  },
-  methods:{
   },
   props:
       {

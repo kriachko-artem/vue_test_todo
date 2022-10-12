@@ -1,23 +1,35 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <div class="input">
-      <input type="text"
-             autofocus
-             v-model="title"
-             id="title"
-             v-on:input="setIsOnChange"
-      >
-      <label v-bind:class="{hidden:isFilled}"
-             for="title"
-             style=""
-      >Что нужно сделать...</label>
+    <div class="top">
+      <div class="input">
+        <input type="text"
+               autofocus
+               v-model="title"
+               id="title"
+               v-on:input="setIsOnChange"
+        >
+        <label v-bind:class="{'hidden':isFilled}"
+               for="title"
+               style=""
+        >Что нужно сделать...</label>
+      </div>
+      <button
+          class="add"
+          type="submit">+</button>
+      <button 
+          class="close"
+          v-on:click="$emit('close-creator')">&times;
+      </button>
     </div>
-    <button
-        class="add"
-        type="submit">+</button>
-    <button 
-        class="close"
-        v-on:click="$emit('close-creator')">&times;</button>
+    <div class="bottom">
+      <label for="categories">Выберите категорию</label>
+      <select v-on:change="setCategory"
+              id="categories">
+        <option v-for="(cat,index) in categories"
+                :key="index"
+                >{{cat.title}}</option>
+      </select>
+    </div>
   </form>
 </template>
 
@@ -25,22 +37,32 @@
 import gsap from 'gsap'
 export default {
   name: "CreateTodo",
+  props:{
+    tables: {type:Array}
+  },
   data(){
     return{
       title: '',
+      categories: Array.from(this.tables),
+      chosenCategory: JSON.parse(JSON.stringify(this.tables[0])),
+      chosenCategory_1: null,
       isFilled: false,
     }
   },
   methods: {
+    setCategory(event){
+      this.chosenCategory = this.categories.find(item=>item.title === event.target.value)
+    },
     onSubmit(){
       if (this.title.trim()){
         const todo = {
           id: Date.now(),
           title: this.title,
           completed: false,
+          category: this.chosenCategory.id
         };
         this.$emit('add-todo',todo)
-        this.title =''
+        this.title = ''
       }
     },
     setIsOnChange(){
@@ -60,7 +82,19 @@ export default {
 
 <style scoped>
 form{
+  width: 60%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #42b983;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: rgba(66, 185, 131, 0.31);
+  gap: 20px;
+}
+form > div{
+  display: flex;
+  justify-content: space-between;
 }
 .input{
   flex: 1;
@@ -83,7 +117,7 @@ form{
   outline: none;
   border-bottom: 1px solid #ffd500;
 }
-.input input:focus-visible + label.hidden{
+.input label.hidden{
   transform: translateY(-100px);
 }
 .input label{
@@ -94,13 +128,6 @@ form{
   top: 0;
   font-size: 13px;
   transition: 0.5s;
-}
-form{
-  display: flex;
-  border: 1px solid #42b983;
-  border-radius: 10px;
-  padding: 10px 20px;
-  background-color: rgba(66, 185, 131, 0.31);
 }
 .add{
   width: 20px;

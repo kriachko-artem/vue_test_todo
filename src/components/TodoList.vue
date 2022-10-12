@@ -25,9 +25,6 @@ export default {
     }
 
   },
-  data(){
-    return {cards: this.todoList}
-  },
   props:{
     todoList: {
       type: Object,
@@ -39,6 +36,7 @@ export default {
 
 <style scoped>
 ul{
+  width: 60%;
   padding: 0;
   list-style: none;
 }
